@@ -21,13 +21,23 @@
   them in the file as individuals of unknown sex (29 individuals for the 27
   people in the features example). They are left out now, with a note naming
   the couple.
+- Adoptive parents and surrogates are no longer written as parents. A child
+  joined to a couple by a dashed line (an adoption) and a parent marked S (a
+  gestational carrier) are not genetic relations, and a linkage program reads
+  the father and mother columns as genetic parents, so 0.1.0's files gave
+  wrong ones. Those parents are now 0, with a note, which is also what
+  studio2ga4gh's PED-style pedigree gives: a solid line from birth parents
+  still counts, and so does a donor (D).
 - A symbol standing for several people (a number such as 3 in the symbol) is
   still written as one person, but the command now says so.
 - An ontology id written after a condition's name in the colour key, as
   studio2ga4gh reads it (`Condition X [MONDO:0009061]`), is left out of the
   MPED column name, which is now `Condition_X` instead of
-  `Condition_X_MONDO0009061`. Two conditions that would give the same column
-  name are told apart with `_2`, `_3`.
+  `Condition_X_MONDO0009061`. Only the ids of ontologies count (the HPO,
+  Mondo, OMIM, Orphanet, SNOMED CT and the others studio2ga4gh can declare):
+  anything else in brackets, such as `Hypertension (BP:160/95)`, stays part of
+  the name. Two conditions that would give the same column name are told apart
+  with `_2`, `_3`.
 - Without `-o`, the output is named after the input without `.studio.json`:
   `okafor.studio.json` gives `okafor.mped`, where 0.1.0 wrote
   `okafor.studio.mped`.

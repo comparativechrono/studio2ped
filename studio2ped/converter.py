@@ -61,8 +61,10 @@ class Person:
     center_text: str                 # 'S'|'P'|'D'|'dot'|''
     deceased: bool
     custom_label: str
-    father_id: Optional[str] = None  # resolved during graph analysis
+    father_id: Optional[str] = None  # the genetic parents, resolved during graph analysis
     mother_id: Optional[str] = None
+    drawn_father_id: Optional[str] = None  # the parents the drawing joins them to, adoptive and
+    drawn_mother_id: Optional[str] = None  # surrogate included: used for the generations
     family_id: Optional[str] = None
     generation: int = -1
     x: float = 0.0                   # position in the drawing
@@ -250,11 +252,21 @@ def detect_families(
     return families
 
 
-def resolve_parents(family: Family):
-    """For each person in the family, determine their father_id and mother_id
-    from the child link and partnership graph. Sets father_id and mother_id
-    on each Person object."""
+def resolve_parents(family: Family) -> list:
+    """For each person in the family, determine their parents from the child
+    link and partnership graph.
+
+    ``drawn_father_id`` and ``drawn_mother_id`` are the couple the drawing
+    joins a person to. ``father_id`` and ``mother_id`` are their genetic
+    parents, which the PED file gives: a dashed line (an adoption) gives no
+    genetic parents, and a parent marked S, a gestational carrier (surrogate),
+    is not a genetic parent, as in studio2ga4gh's PED-style pedigree.
+
+    Returns what was not written as a parent, as ``("adopted", child, (a, b))``
+    and ``("surrogate", child, carrier, "mother" or "father")``.
+    """
     pship_map = {p.id: p for p in family.partnerships}
+    left_out = []
 
     for cl in family.child_links:
         pship = pship_map.get(cl.partnership_id)
@@ -271,32 +283,45 @@ def resolve_parents(family: Family):
             continue
 
         if p1.sex == 1 and p2.sex == 2:
-            child.father_id = p1.id
-            child.mother_id = p2.id
+            father, mother = p1, p2
         elif p1.sex == 2 and p2.sex == 1:
-            child.father_id = p2.id
-            child.mother_id = p1.id
+            father, mother = p2, p1
         else:
             # Same sex or unknown — use from_id as father, to_id as mother
             # (follows the convention used by Pedigree Studio)
-            child.father_id = pship.from_id
-            child.mother_id = pship.to_id
+            father, mother = p1, p2
+        child.drawn_father_id, child.drawn_mother_id = father.id, mother.id
+
+        if cl.dashed:
+            # adoptive parents are not genetic parents; a solid line from the birth parents still counts
+            left_out.append(("adopted", child.id, (p1.id, p2.id)))
+            continue
+        for parent, role in ((father, "father"), (mother, "mother")):
+            if parent.center_text == "S":
+                left_out.append(("surrogate", child.id, parent.id, role))
+            elif role == "father":
+                child.father_id = parent.id
+            else:
+                child.mother_id = parent.id
 
     # Set family_id on all persons
     for p in family.persons.values():
         p.family_id = family.family_id
+    return left_out
 
 
 def assign_generations(family: Family):
     """Assign generation numbers to all persons in the family via graph
     traversal. Founders (no parents in the family) get generation 0.
-    Uses iterative propagation identical to ped2studio."""
+    Uses iterative propagation identical to ped2studio, along the lines of the
+    drawing (so an adopted child is in the generation below their adoptive
+    parents)."""
     persons = family.persons
 
     # Pass 1: founders
     for p in persons.values():
-        has_father = p.father_id and p.father_id in persons
-        has_mother = p.mother_id and p.mother_id in persons
+        has_father = p.drawn_father_id and p.drawn_father_id in persons
+        has_mother = p.drawn_mother_id and p.drawn_mother_id in persons
         if not has_father and not has_mother:
             p.generation = 0
 
@@ -307,15 +332,16 @@ def assign_generations(family: Family):
         for p in persons.values():
             if p.generation >= 0:
                 continue
-            fg = persons[p.father_id].generation if (p.father_id and p.father_id in persons) else -1
-            mg = persons[p.mother_id].generation if (p.mother_id and p.mother_id in persons) else -1
+            f, m = p.drawn_father_id, p.drawn_mother_id
+            fg = persons[f].generation if (f and f in persons) else -1
+            mg = persons[m].generation if (m and m in persons) else -1
             if fg >= 0 and mg >= 0:
                 p.generation = max(fg, mg) + 1
                 changed = True
-            elif fg >= 0 and not (p.mother_id and p.mother_id in persons):
+            elif fg >= 0 and not (m and m in persons):
                 p.generation = fg + 1
                 changed = True
-            elif mg >= 0 and not (p.father_id and p.father_id in persons):
+            elif mg >= 0 and not (f and f in persons):
                 p.generation = mg + 1
                 changed = True
 
@@ -329,8 +355,8 @@ def assign_generations(family: Family):
 
     for p in persons.values():
         if p.generation >= 0:
-            has_parent = (p.father_id and p.father_id in persons) or \
-                         (p.mother_id and p.mother_id in persons)
+            has_parent = (p.drawn_father_id and p.drawn_father_id in persons) or \
+                         (p.drawn_mother_id and p.drawn_mother_id in persons)
             if has_parent:
                 continue
             for pid in partner_of.get(p.id, []):
@@ -747,15 +773,26 @@ def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: boo
 
 # An ontology id after a condition's name, as studio2ga4gh reads it from the
 # colour key: "Breast cancer [MONDO:0007254]" or "Deafness (HP:0000365)"
-_TRAILING_CURIE = re.compile(r"^(.*?)\s*[\[(]\s*([A-Za-z][A-Za-z0-9.\-]*:[^\s:_\])]+)\s*[\])]\s*$")
+_TRAILING_CURIE = re.compile(r"^(.*?)\s*[\[(]\s*([A-Za-z][A-Za-z0-9.\-]*):([^\s:_\])]+)\s*[\])]\s*$")
+
+# The ontologies whose ids count as one in brackets: those pedigree-ga4gh, and so
+# studio2ga4gh, can declare in a Phenopacket. Anything else in brackets, such as a
+# blood pressure "(BP:160/95)", is part of the condition's name.
+ONTOLOGY_PREFIXES = ("HP", "MONDO", "OMIM", "ORPHA", "DOID", "SNOMEDCT", "ICD10CM", "NCIT", "EFO", "GENO",
+                     "HGNC", "UBERON", "SO", "ECO", "PATO", "UO", "CL", "NCBITaxon", "UCUM", "LOINC", "CHEBI",
+                     "HANCESTRO", "MAXO", "DrugCentral")
+_PREFIX_NAMES = {p.lower(): p for p in ONTOLOGY_PREFIXES}
+_PREFIX_NAMES.update({"hpo": "HP", "mim": "OMIM", "orphanet": "ORPHA", "snomed": "SNOMEDCT", "sctid": "SNOMEDCT"})
 
 
 def split_condition_name(name: str) -> tuple[str, Optional[str]]:
     """``"Breast cancer [MONDO:0007254]"`` -> ``("Breast cancer", "MONDO:0007254")``;
-    a name without an ontology id in brackets comes back with ``None``."""
+    a name without an ontology id in brackets comes back with ``None``, and so
+    does one whose bracket holds something else (``"Hypertension (BP:160/95)"``)."""
     m = _TRAILING_CURIE.match(name or "")
-    if m:
-        return (m.group(1).strip() or m.group(2)), m.group(2)
+    if m and m.group(2).lower() in _PREFIX_NAMES:
+        curie = "{}:{}".format(_PREFIX_NAMES[m.group(2).lower()], m.group(3))
+        return (m.group(1).strip() or curie), curie
     return (name or "").strip(), None
 
 
@@ -856,7 +893,15 @@ def convert(
 
     # Resolve parent-child relationships and generations for each family
     for fam in families:
-        resolve_parents(fam)
+        for item in resolve_parents(fam):
+            if item[0] == "adopted":
+                _, child, (a, b) = item
+                notes.append(f"{id_map[a]} and {id_map[b]} adopted {id_map[child]} (a dashed line): adoptive "
+                             f"parents are not genetic parents, so they are not written as {id_map[child]}'s parents")
+            else:
+                _, child, carrier, role = item
+                notes.append(f"{id_map[carrier]} carried {id_map[child]} as a surrogate (S): a gestational carrier is "
+                             f"not a genetic parent, so {id_map[child]}'s {role} is written as 0")
         assign_generations(fam)
 
     # Extract phenotypes from legend

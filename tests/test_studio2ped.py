@@ -140,6 +140,16 @@ def test_ontology_ids_are_taken_off_column_names():
     assert split_condition_name("Deafness (HP:0000365)") == ("Deafness", "HP:0000365")
     assert split_condition_name("Sickle cell anaemia (HbSS)") == ("Sickle cell anaemia (HbSS)", None)
     assert split_condition_name("[OMIM:219700]") == ("OMIM:219700", "OMIM:219700")
+    assert split_condition_name("Asthma [hpo:0002099]") == ("Asthma", "HP:0002099")
+    # only an ontology's id counts: a blood pressure in brackets is part of the name
+    assert split_condition_name("Hypertension (BP:160/95)") == ("Hypertension (BP:160/95)", None)
+    bp = load("price")
+    bp["legendLabels"] = {"#c0392b": "Hypertension (BP:160/95)", "#8e44ad": "Breast cancer [MONDO:0007254]",
+                          "#f1c40f": "Prostate cancer"}
+    bp_result = studio2ped.convert(bp)
+    assert bp_result.files[0][1].splitlines()[0].split("\t")[1:] == ["Hypertension_BP16095", "Breast_cancer",
+                                                                     "Prostate_cancer"]
+    assert not any("BP:160/95" in n for n in bp_result.notes)
     result = studio2ped.convert(load("features"))
     header = result.files[0][1].splitlines()[0].split("\t")
     assert header[1:] == ["Condition_X", "Condition_Y", "Condition_Z", "Carrier"]
@@ -150,6 +160,41 @@ def test_ontology_ids_are_taken_off_column_names():
                                "#f1c40f": "Prostate cancer"}
     header = studio2ped.convert(session).files[0][1].splitlines()[0].split("\t")
     assert header[1:] == ["Breast_cancer", "Breast_cancer_2", "Prostate_cancer"]
+
+
+def test_the_ontologies_are_the_ones_studio2ga4gh_accepts():
+    """studio2ped does not need pedigree-ga4gh, so it keeps its own copy of the ontologies whose ids come off a
+    column name; when pedigree-ga4gh is installed, the copy must match the ontologies it can declare."""
+    ontology = pytest.importorskip("pedigree_ga4gh.ontology")
+    from studio2ped import converter
+    assert set(converter.ONTOLOGY_PREFIXES) == set(ontology.RESOURCES)
+    for alias, prefix in converter._PREFIX_NAMES.items():
+        assert ontology.tidy_curie(alias + ":1") == prefix + ":1"
+
+
+def test_adoptive_and_surrogate_parents_are_not_genetic_parents():
+    """A dashed line (an adoption) and a parent marked S (a gestational carrier) give no genetic parent, as in
+    studio2ga4gh's PED-style pedigree; the people stay in the family, in the generation the drawing shows."""
+    features = studio2ped.convert(load("features"))
+    table = {r[1]: r for r in rows(features.files[0][1])}
+    assert table["III-1"][2:4] == ["II-2", "0"]        # II-3, the mother in the drawing, is a surrogate
+    assert table["III-3"][2:4] == ["0", "0"]           # adopted by II-6 and II-7
+    assert table["III-2"][2:4] == ["II-5", "II-4"]     # a donor (D) is a genetic parent
+    assert any("II-3 carried III-1 as a surrogate" in n for n in features.notes)
+    assert any("II-6 and II-7 adopted III-3" in n for n in features.notes)
+    ids = [r[1] for r in rows(features.files[0][1])]
+    assert ids.index("III-3") > ids.index("II-7")       # still listed with their generation
+    price = studio2ped.convert(load("price"))
+    assert {r[1]: r for r in rows(price.files[0][1])}["III-5"][2:4] == ["0", "0"]
+
+
+def test_labels_become_identifiers_as_in_studio2ga4gh():
+    """Spaces become underscores and other punctuation is dropped, the same rule studio2ga4gh uses, so a person
+    has the same identifier in the PED file and the GA4GH files."""
+    from studio2ped.converter import _sanitise_id
+    assert _sanitise_id("J. Mensah") == "J_Mensah"
+    assert _sanitise_id("  Ama  Owusu (b. 1950) ") == "Ama_Owusu_b_1950"
+    assert _sanitise_id("II-3") == "II-3"
 
 
 def test_output_names():

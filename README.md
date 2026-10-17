@@ -73,11 +73,17 @@ The converter reads a Pedigree Studio session file and:
 3. **Leaves out symbols that are not people.** Pedigree Studio stores the "no
    children" bar and the "infertility" double bar as children of the couple;
    they are not written as individuals, and a note names the couple.
-4. **Extracts phenotypes** from the colour key: solid fills, half fills,
+4. **Gives genetic parents only.** The father and mother columns of a PED
+   file are genetic parents. A child joined to a couple by a dashed line (an
+   adoption) gets 0 for that couple, and so does the place of a parent marked
+   S (a gestational carrier), with a note in each case; a parent marked D (a
+   donor) is a genetic parent. studio2ga4gh's PED-style pedigree gives the
+   same.
+5. **Extracts phenotypes** from the colour key: solid fills, half fills,
    quartered fills and shading patterns are all recognised.
-5. **Detects carrier notation**: centre dots (●) and half-filled symbols mark
+6. **Detects carrier notation**: centre dots (●) and half-filled symbols mark
    carriers.
-6. **Chooses the format**:
+7. **Chooses the format**:
    - **one phenotype** → a standard `.ped` file (6 columns);
    - **several phenotypes**, or **carrier notation alongside a phenotype** → an
      extended `.mped` file.
@@ -98,10 +104,13 @@ the drawing has labels typed in, can put names into the file: use them only
 when that is acceptable for wherever the file is going.
 
 Identifiers can't contain spaces, so spaces become underscores and other
-punctuation is dropped. No two people may share an identifier, and `0` means
-"no parent" in a PED file, so if a label would be shared by two people (two
-cousins both labelled "26", say), would be empty or would be `0`, the person
-is given their pedigree number instead, and a note says so.
+punctuation is dropped: "J. Mensah" becomes `J_Mensah`. studio2ga4gh makes its
+ids from labels the same way, so with the same choice a person has the same
+identifier in the PED file and in the GA4GH files. No two people may share an
+identifier, and `0` means "no parent" in a PED file, so if a label would be
+shared by two people (two cousins both labelled "26", say), would be empty or
+would be `0`, the person is given their pedigree number instead, and a note
+says so.
 
 Pedigree numbers follow the drawing, as in Pedigree Studio: a new generation
 starts 80 pixels or more below the first symbol of the generation above, and
@@ -150,6 +159,9 @@ Column names are the condition names from the colour key, with spaces turned
 into underscores. An ontology id written in brackets after a name, as
 studio2ga4gh reads it ("Breast cancer [MONDO:0007254]"), is left out of the
 column name, which is then `Breast_cancer`, and a note says which id it had.
+Only the ids of ontologies studio2ga4gh can declare count (the HPO, Mondo,
+OMIM, Orphanet, SNOMED CT and so on): anything else in brackets, such as
+"Hypertension (BP:160/95)", stays part of the name.
 If two conditions would give the same column name, the second becomes
 `Breast_cancer_2`.
 
