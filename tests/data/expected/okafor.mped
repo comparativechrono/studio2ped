@@ -1,0 +1,18 @@
+# MPED v1	Hearing_loss_from_birth	Breast_cancer
+# FamID	IndID	FatherID	MotherID	Sex	Hearing_loss_from_birth	Breast_cancer
+FAM1	I-1	0	0	1	1	1
+FAM1	I-2	0	0	2	1	1
+FAM1	II-1	0	0	2	1	1
+FAM1	II-2	I-1	I-2	1	1	1
+FAM1	II-3	I-1	I-2	2	1	2
+FAM1	II-4	0	0	1	1	1
+FAM1	III-1	II-2	II-1	1	1	1
+FAM1	III-2	II-2	II-1	1	1	1
+FAM1	III-3	II-4	II-3	2	1	1
+FAM1	III-4	II-4	II-3	2	1	1
+FAM1	III-5	II-4	II-3	1	1	1
+FAM1	IV-1	III-2	III-3	2	1	1
+FAM1	IV-2	III-2	III-3	0	1	1
+FAM1	IV-3	III-2	III-3	1	2	1
+FAM1	IV-4	III-2	III-3	1	2	1
+FAM1	IV-5	III-2	III-3	0	1	1

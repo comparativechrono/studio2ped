@@ -1,0 +1,582 @@
+{
+  "version": 4,
+  "personIdCounter": 0,
+  "labelIdCounter": 0,
+  "lineIdCounter": 16,
+  "persons": [
+    {
+      "id": "p-ron",
+      "shape": "male",
+      "x": 291.0,
+      "y": 160,
+      "text": "Ron, d. 70\nheart attack",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-pat",
+      "shape": "female",
+      "x": 395.0,
+      "y": 160,
+      "text": "Pat, 82",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-bill",
+      "shape": "male",
+      "x": 668,
+      "y": 160,
+      "text": "Bill, 84\nprostate cancer dx 79",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#f1c40f",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-jean",
+      "shape": "female",
+      "x": 772,
+      "y": 160,
+      "text": "Jean, d. 47\n?breast cancer",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-paul",
+      "shape": "male",
+      "x": 226.0,
+      "y": 290,
+      "text": "Paul, 62",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-lisa",
+      "shape": "female",
+      "x": 356,
+      "y": 290,
+      "text": "Lisa, 52",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-steve",
+      "shape": "male",
+      "x": 460,
+      "y": 290,
+      "text": "Steve, 60",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-karen",
+      "shape": "female",
+      "x": 590.0,
+      "y": 290,
+      "text": "Karen, 58\nbreast cancer dx 42\ngene test 2010:\nno variant found",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#c0392b",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-julie",
+      "shape": "female",
+      "x": 746.0,
+      "y": 290,
+      "text": "Julie, d. 52\novarian cancer dx 50",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#8e44ad",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-mark",
+      "shape": "male",
+      "x": 876,
+      "y": 290,
+      "text": "Mark, 53",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-sarah",
+      "shape": "female",
+      "x": 980,
+      "y": 290,
+      "text": "Sarah, 51",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-josh",
+      "shape": "male",
+      "x": 408,
+      "y": 420,
+      "text": "Josh, 19",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-megan",
+      "shape": "female",
+      "x": 538.0,
+      "y": 420,
+      "text": "Megan, 31",
+      "deceased": false,
+      "proband": true,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ryan",
+      "shape": "male",
+      "x": 642.0,
+      "y": 420,
+      "text": "Ryan, 28",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-luke",
+      "shape": "male",
+      "x": 720,
+      "y": 420,
+      "text": "Luke, 28",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-amy",
+      "shape": "adopted-female",
+      "x": 928,
+      "y": 420,
+      "text": "Amy, 15",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    }
+  ],
+  "labels": [],
+  "partnerships": [
+    {
+      "id": "pship-1",
+      "fromId": "p-ron",
+      "toId": "p-pat",
+      "type": "normal"
+    },
+    {
+      "id": "pship-2",
+      "fromId": "p-bill",
+      "toId": "p-jean",
+      "type": "normal"
+    },
+    {
+      "id": "pship-3",
+      "fromId": "p-lisa",
+      "toId": "p-steve",
+      "type": "normal"
+    },
+    {
+      "id": "pship-4",
+      "fromId": "p-steve",
+      "toId": "p-karen",
+      "type": "separated"
+    },
+    {
+      "id": "pship-5",
+      "fromId": "p-mark",
+      "toId": "p-sarah",
+      "type": "normal"
+    }
+  ],
+  "childLinks": [
+    {
+      "id": "child-6",
+      "partnershipId": "pship-1",
+      "childId": "p-paul",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-7",
+      "partnershipId": "pship-1",
+      "childId": "p-steve",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-8",
+      "partnershipId": "pship-2",
+      "childId": "p-karen",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-9",
+      "partnershipId": "pship-2",
+      "childId": "p-julie",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-10",
+      "partnershipId": "pship-2",
+      "childId": "p-mark",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-11",
+      "partnershipId": "pship-3",
+      "childId": "p-josh",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-12",
+      "partnershipId": "pship-4",
+      "childId": "p-megan",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-13",
+      "partnershipId": "pship-4",
+      "childId": "p-ryan",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-14",
+      "partnershipId": "pship-4",
+      "childId": "p-luke",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-15",
+      "partnershipId": "pship-5",
+      "childId": "p-amy",
+      "branchYOffset": 0,
+      "dashed": true
+    }
+  ],
+  "twinLinks": [
+    {
+      "id": "twin-16",
+      "child1Id": "p-ryan",
+      "child2Id": "p-luke",
+      "type": "identical",
+      "partnershipId": "pship-4"
+    }
+  ],
+  "legendLabels": {
+    "#c0392b": "Breast cancer",
+    "#8e44ad": "Ovarian cancer",
+    "#f1c40f": "Prostate cancer"
+  },
+  "legendVisible": true,
+  "legendX": 1058.0,
+  "legendY": 160,
+  "numberingMode": "numbers",
+  "partnerGapMultiplier": 2,
+  "childHeightMultiplier": 2.5,
+  "drawStrokes": []
+}
