@@ -5,7 +5,8 @@ from __future__ import annotations
 import argparse
 import sys
 
-from .converter import convert_file
+from . import __version__
+from .converter import ID_CHOICES, convert_file
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -21,7 +22,7 @@ def main(argv: list[str] | None = None) -> int:
         "-o", "--output-prefix",
         default=None,
         dest="output_prefix",
-        help="Base name for output files (default: input filename stem)",
+        help="Base name for output files (default: the input file's name without .studio.json)",
     )
     parser.add_argument(
         "-d", "--output-dir",
@@ -29,6 +30,15 @@ def main(argv: list[str] | None = None) -> int:
         dest="output_dir",
         help="Directory for output files (default: same as input file)",
     )
+    parser.add_argument(
+        "--ids",
+        choices=ID_CHOICES,
+        default="numbers",
+        help="How people are identified: pedigree numbers such as II-3 (numbers, the default), the labels "
+             "the drawing shows (drawing), Pedigree Studio's own ids (studio), or version 0.1.0's "
+             "identifiers taken from the text under each symbol, which are often names (text)",
+    )
+    parser.add_argument("--version", action="version", version=f"studio2ped {__version__}")
 
     args = parser.parse_args(argv)
 
@@ -37,13 +47,16 @@ def main(argv: list[str] | None = None) -> int:
             args.input,
             output_prefix=args.output_prefix,
             output_dir=args.output_dir,
+            ids=args.ids,
         )
         print(result.summary)
         for filepath, _ in result.files:
             print(f"  Written: {filepath}")
+        for note in result.notes:
+            print(f"  Note: {note}")
         return 0
-    except FileNotFoundError:
-        print(f"Error: file not found: {args.input}", file=sys.stderr)
+    except FileNotFoundError as e:
+        print(f"Error: file not found: {e.filename or args.input}", file=sys.stderr)
         return 1
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)

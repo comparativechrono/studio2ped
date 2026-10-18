@@ -5,6 +5,9 @@ Core converter module: parses Pedigree Studio session data, detects separate
 pedigrees via graph traversal, extracts phenotypes from visual markers and
 legend labels, and emits standard PED files (single phenotype) or extended
 MPED files (multiple phenotypes).
+
+People are identified by their pedigree numbers (II-3) unless another kind of
+identifier is asked for: see :func:`individual_ids`.
 """
 
 from __future__ import annotations
@@ -12,11 +15,9 @@ from __future__ import annotations
 import json
 import os
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from typing import Optional
-
-__version__ = "0.1.0"
 
 # ── PED phenotype codes ───────────────────────────────────────────────────
 PHENO_UNKNOWN = 0
@@ -30,6 +31,16 @@ SHAPE_TO_SEX = {
     "adopted-male": 1, "adopted-female": 2, "adopted-unknown": 0,
     "miscarriage": 0, "no-offspring": 0, "infertile": 0,
 }
+
+# Symbols that are not people: the bar under a couple for "no children" and the
+# double bar for infertility. Pedigree Studio stores them as children of the
+# couple, so they have to be taken out before the family is written.
+MARKERS = {"no-offspring": "no children", "infertile": "infertility"}
+
+# The kinds of identifier --ids offers (see individual_ids)
+ID_CHOICES = ("numbers", "drawing", "studio", "text")
+
+_ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
 
 # ── Data models ───────────────────────────────────────────────────────────
@@ -50,10 +61,20 @@ class Person:
     center_text: str                 # 'S'|'P'|'D'|'dot'|''
     deceased: bool
     custom_label: str
-    father_id: Optional[str] = None  # resolved during graph analysis
+    father_id: Optional[str] = None  # the genetic parents, resolved during graph analysis
     mother_id: Optional[str] = None
+    drawn_father_id: Optional[str] = None  # the parents the drawing joins them to, adoptive and
+    drawn_mother_id: Optional[str] = None  # surrogate included: used for the generations
     family_id: Optional[str] = None
     generation: int = -1
+    x: float = 0.0                   # position in the drawing
+    y: float = 0.0
+    position: int = 0                # order in the drawing: by row, then left to right
+
+    @property
+    def is_marker(self) -> bool:
+        """True for the "no children" and "infertile" symbols, which are not people."""
+        return self.shape in MARKERS
 
 
 @dataclass
@@ -97,6 +118,13 @@ class Family:
 
 # ── Session parser ────────────────────────────────────────────────────────
 
+def _number(value) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
+
+
 def parse_session(data: dict) -> tuple[dict[str, Person], list[Partnership], list[ChildLink], dict]:
     """Parse a Pedigree Studio session JSON into internal data structures.
 
@@ -119,6 +147,8 @@ def parse_session(data: dict) -> tuple[dict[str, Person], list[Partnership], lis
             center_text=pd.get("centerText", ""),
             deceased=pd.get("deceased", False),
             custom_label=pd.get("customLabel", ""),
+            x=_number(pd.get("x")),
+            y=_number(pd.get("y")),
         )
 
     partnerships = []
@@ -222,11 +252,21 @@ def detect_families(
     return families
 
 
-def resolve_parents(family: Family):
-    """For each person in the family, determine their father_id and mother_id
-    from the child link and partnership graph. Sets father_id and mother_id
-    on each Person object."""
+def resolve_parents(family: Family) -> list:
+    """For each person in the family, determine their parents from the child
+    link and partnership graph.
+
+    ``drawn_father_id`` and ``drawn_mother_id`` are the couple the drawing
+    joins a person to. ``father_id`` and ``mother_id`` are their genetic
+    parents, which the PED file gives: a dashed line (an adoption) gives no
+    genetic parents, and a parent marked S, a gestational carrier (surrogate),
+    is not a genetic parent, as in studio2ga4gh's PED-style pedigree.
+
+    Returns what was not written as a parent, as ``("adopted", child, (a, b))``
+    and ``("surrogate", child, carrier, "mother" or "father")``.
+    """
     pship_map = {p.id: p for p in family.partnerships}
+    left_out = []
 
     for cl in family.child_links:
         pship = pship_map.get(cl.partnership_id)
@@ -243,32 +283,45 @@ def resolve_parents(family: Family):
             continue
 
         if p1.sex == 1 and p2.sex == 2:
-            child.father_id = p1.id
-            child.mother_id = p2.id
+            father, mother = p1, p2
         elif p1.sex == 2 and p2.sex == 1:
-            child.father_id = p2.id
-            child.mother_id = p1.id
+            father, mother = p2, p1
         else:
             # Same sex or unknown — use from_id as father, to_id as mother
             # (follows the convention used by Pedigree Studio)
-            child.father_id = pship.from_id
-            child.mother_id = pship.to_id
+            father, mother = p1, p2
+        child.drawn_father_id, child.drawn_mother_id = father.id, mother.id
+
+        if cl.dashed:
+            # adoptive parents are not genetic parents; a solid line from the birth parents still counts
+            left_out.append(("adopted", child.id, (p1.id, p2.id)))
+            continue
+        for parent, role in ((father, "father"), (mother, "mother")):
+            if parent.center_text == "S":
+                left_out.append(("surrogate", child.id, parent.id, role))
+            elif role == "father":
+                child.father_id = parent.id
+            else:
+                child.mother_id = parent.id
 
     # Set family_id on all persons
     for p in family.persons.values():
         p.family_id = family.family_id
+    return left_out
 
 
 def assign_generations(family: Family):
     """Assign generation numbers to all persons in the family via graph
     traversal. Founders (no parents in the family) get generation 0.
-    Uses iterative propagation identical to ped2studio."""
+    Uses iterative propagation identical to ped2studio, along the lines of the
+    drawing (so an adopted child is in the generation below their adoptive
+    parents)."""
     persons = family.persons
 
     # Pass 1: founders
     for p in persons.values():
-        has_father = p.father_id and p.father_id in persons
-        has_mother = p.mother_id and p.mother_id in persons
+        has_father = p.drawn_father_id and p.drawn_father_id in persons
+        has_mother = p.drawn_mother_id and p.drawn_mother_id in persons
         if not has_father and not has_mother:
             p.generation = 0
 
@@ -279,15 +332,16 @@ def assign_generations(family: Family):
         for p in persons.values():
             if p.generation >= 0:
                 continue
-            fg = persons[p.father_id].generation if (p.father_id and p.father_id in persons) else -1
-            mg = persons[p.mother_id].generation if (p.mother_id and p.mother_id in persons) else -1
+            f, m = p.drawn_father_id, p.drawn_mother_id
+            fg = persons[f].generation if (f and f in persons) else -1
+            mg = persons[m].generation if (m and m in persons) else -1
             if fg >= 0 and mg >= 0:
                 p.generation = max(fg, mg) + 1
                 changed = True
-            elif fg >= 0 and not (p.mother_id and p.mother_id in persons):
+            elif fg >= 0 and not (m and m in persons):
                 p.generation = fg + 1
                 changed = True
-            elif mg >= 0 and not (p.father_id and p.father_id in persons):
+            elif mg >= 0 and not (f and f in persons):
                 p.generation = mg + 1
                 changed = True
 
@@ -301,8 +355,8 @@ def assign_generations(family: Family):
 
     for p in persons.values():
         if p.generation >= 0:
-            has_parent = (p.father_id and p.father_id in persons) or \
-                         (p.mother_id and p.mother_id in persons)
+            has_parent = (p.drawn_father_id and p.drawn_father_id in persons) or \
+                         (p.drawn_mother_id and p.drawn_mother_id in persons)
             if has_parent:
                 continue
             for pid in partner_of.get(p.id, []):
@@ -463,8 +517,143 @@ def has_carrier_notation(persons: dict[str, Person]) -> bool:
 
 # ── ID generation ─────────────────────────────────────────────────────────
 
+def drawn_rows(persons: dict[str, Person]) -> list[list[Person]]:
+    """The rows (generations) of the drawing as Pedigree Studio numbers them.
+
+    Everyone is sorted from top to bottom, the "no children" and "infertile"
+    symbols included; a new row starts 80 px or more below the first symbol of
+    the row above, and each row is read from left to right.
+    """
+    rows: list[list[Person]] = []
+    for p in sorted(persons.values(), key=lambda q: q.y):
+        if rows and p.y - rows[-1][0].y < 80:
+            rows[-1].append(p)
+        else:
+            rows.append([p])
+    return [sorted(row, key=lambda q: q.x) for row in rows]
+
+
+def _generation_label(index: int) -> str:
+    return _ROMAN[index] if index < len(_ROMAN) else str(index + 1)
+
+
+def pedigree_numbers(persons: dict[str, Person]) -> dict[str, str]:
+    """Pedigree numbers as Pedigree Studio shows them: the generation in Roman
+    numerals and the position from the left, such as ``II-3``."""
+    out = {}
+    for gi, row in enumerate(drawn_rows(persons)):
+        for pi, p in enumerate(row):
+            out[p.id] = f"{_generation_label(gi)}-{pi + 1}"
+    return out
+
+
+def _letters(n: int) -> str:
+    s = ""
+    while n >= 0:
+        s = chr(65 + n % 26) + s
+        n = n // 26 - 1
+    return s
+
+
+def drawing_labels(persons: dict[str, Person], numbering_mode: str = "numbers") -> dict[str, str]:
+    """The label each symbol shows in the drawing under its numbering setting:
+    pedigree numbers (``numbers``, and ``off``), letters (``letters``: II-A;
+    ``lettersonly``: A, B, C ...) or the labels typed in (``freetext``, where a
+    symbol without one shows its pedigree number)."""
+    numbers = pedigree_numbers(persons)
+    if numbering_mode == "freetext":
+        out = {}
+        for pid, p in persons.items():
+            label = (p.custom_label or "").strip()
+            out[pid] = label if label and label != "Lbl" else numbers[pid]
+        return out
+    if numbering_mode in ("letters", "lettersonly"):
+        out, k = {}, 0
+        for gi, row in enumerate(drawn_rows(persons)):
+            for pi, p in enumerate(row):
+                out[p.id] = _letters(k) if numbering_mode == "lettersonly" else f"{_generation_label(gi)}-{_letters(pi)}"
+                k += 1
+        return out
+    return numbers
+
+
+def _sanitise_id(raw: str) -> str:
+    """Spaces become underscores; anything but letters, digits, _ and - is dropped."""
+    s = re.sub(r"\s+", "_", (raw or "").strip())
+    return re.sub(r"[^\w\-]", "", s)
+
+
+def individual_ids(
+    persons: dict[str, Person],
+    ids: str = "numbers",
+    numbering_mode: str = "numbers",
+) -> tuple[dict[str, str], list[str]]:
+    """The identifier each person is given in the PED file, and notes about them.
+
+    ``ids`` is one of :data:`ID_CHOICES`:
+
+    * ``numbers`` (the default): pedigree numbers, such as ``II-3``;
+    * ``drawing``: the labels the drawing shows under its numbering setting;
+    * ``studio``: Pedigree Studio's own ids, such as ``p-3``;
+    * ``text``: version 0.1.0's identifiers (see :func:`make_individual_id`),
+      which are often names.
+
+    ``persons`` should include the "no children" and "infertile" symbols,
+    because Pedigree Studio counts them when it numbers a row. Identifiers must
+    be unique, so anyone whose identifier would be shared with someone else, or
+    would be empty or ``0`` (which PED reads as "no parent"), is given their
+    pedigree number instead, and a note says so.
+    """
+    if ids not in ID_CHOICES:
+        raise ValueError(f"ids must be one of {', '.join(ID_CHOICES)}, not {ids!r}")
+    numbers = pedigree_numbers(persons)
+    people = [pid for pid, p in persons.items() if not p.is_marker]
+    if ids == "numbers":
+        return {pid: numbers[pid] for pid in people}, []
+    if ids == "drawing":
+        labels = drawing_labels(persons, numbering_mode)
+        wanted = {pid: _sanitise_id(labels[pid]) for pid in people}
+    elif ids == "studio":
+        wanted = {pid: _sanitise_id(pid) for pid in people}
+    else:
+        wanted = {pid: make_individual_id(persons[pid]) for pid in people}
+    notes: list[str] = []
+    out = {}
+    for pid in people:
+        if wanted[pid] == "0":
+            out[pid] = numbers[pid]
+            notes.append(f"{numbers[pid]} is labelled 0, which PED reads as 'no parent', so their pedigree "
+                         f"number is used instead")
+        elif not wanted[pid]:
+            out[pid] = numbers[pid]
+            notes.append(f"{numbers[pid]}'s label has nothing that can go into an identifier, so their pedigree "
+                         f"number is used instead")
+        else:
+            out[pid] = wanted[pid]
+    while True:
+        counts = Counter(out.values())
+        clashes = defaultdict(list)
+        for pid in people:
+            if counts[out[pid]] > 1 and out[pid] != numbers[pid]:
+                clashes[out[pid]].append(pid)
+        if not clashes:
+            break
+        for label, pids in clashes.items():
+            for pid in pids:
+                out[pid] = numbers[pid]
+            notes.append("'{}' would identify more than one person, so {} {} identified by their pedigree "
+                         "number{} instead".format(label, _and(numbers[pid] for pid in pids),
+                                                   "is" if len(pids) == 1 else "are", "" if len(pids) == 1 else "s"))
+    return out, notes
+
+
+def _and(items) -> str:
+    items = list(items)
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
 def make_individual_id(person: Person) -> str:
-    """Generate a human-readable individual ID from the person's data.
+    """Version 0.1.0's identifier for a person (``--ids text``).
 
     Priority: custom label → annotation text first line → person ID.
     Sanitises to remove whitespace and special characters.
@@ -488,20 +677,26 @@ def make_individual_id(person: Person) -> str:
 
 # ── PED/MPED output ──────────────────────────────────────────────────────
 
-def build_standard_ped(family: Family, phenotypes: list[Phenotype]) -> str:
+def _rows_in_order(family: Family) -> list[Person]:
+    """Everyone in the family, generation by generation, each generation in the
+    order of the drawing (Pedigree Studio's id breaks any tie)."""
+    return sorted(family.persons.values(), key=lambda p: (p.generation, p.position, p.id))
+
+
+def build_standard_ped(family: Family, phenotypes: list[Phenotype], ids: Optional[dict] = None) -> str:
     """Build a standard 6-column PED file for a single-phenotype family.
 
     If there's exactly one phenotype, affected=2, carrier/unaffected=1.
     If there are no phenotypes, all get phenotype 1 (unaffected).
+    ``ids`` maps Pedigree Studio's ids to the identifiers to write (see
+    :func:`individual_ids`); without it, version 0.1.0's identifiers are used.
     """
     lines = [f"# Family: {family.family_id}"]
     lines.append("# FamID\tIndID\tFatherID\tMotherID\tSex\tPhenotype")
 
-    # Sort by generation then ID for consistent output
-    sorted_persons = sorted(family.persons.values(),
-                           key=lambda p: (p.generation, p.id))
+    sorted_persons = _rows_in_order(family)
 
-    id_map = {p.id: make_individual_id(p) for p in sorted_persons}
+    id_map = ids if ids is not None else {p.id: make_individual_id(p) for p in sorted_persons}
 
     for p in sorted_persons:
         ind_id = id_map[p.id]
@@ -525,7 +720,8 @@ def build_standard_ped(family: Family, phenotypes: list[Phenotype]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: bool) -> str:
+def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: bool,
+               ids: Optional[dict] = None) -> str:
     """Build an MPED (multi-phenotype PED) file.
 
     Format:
@@ -534,9 +730,11 @@ def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: boo
     - Data lines: standard PED columns + one column per phenotype
 
     Phenotype codes: 0=unknown, 1=unaffected, 2=affected, 3=carrier
+
+    ``ids`` is as for :func:`build_standard_ped`.
     """
     # Build phenotype column names (sanitise for header)
-    col_names = [_sanitise_column_name(ph.name) for ph in phenotypes]
+    col_names = column_names(phenotypes)
 
     # Add a Carrier column if carrier notation is present and not already a phenotype
     carrier_col = None
@@ -547,10 +745,9 @@ def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: boo
     lines = [f"# MPED v1\t" + "\t".join(col_names)]
     lines.append("# FamID\tIndID\tFatherID\tMotherID\tSex\t" + "\t".join(col_names))
 
-    sorted_persons = sorted(family.persons.values(),
-                           key=lambda p: (p.generation, p.id))
+    sorted_persons = _rows_in_order(family)
 
-    id_map = {p.id: make_individual_id(p) for p in sorted_persons}
+    id_map = ids if ids is not None else {p.id: make_individual_id(p) for p in sorted_persons}
 
     for p in sorted_persons:
         ind_id = id_map[p.id]
@@ -574,11 +771,50 @@ def build_mped(family: Family, phenotypes: list[Phenotype], include_carrier: boo
     return "\n".join(lines) + "\n"
 
 
+# An ontology id after a condition's name, as studio2ga4gh reads it from the
+# colour key: "Breast cancer [MONDO:0007254]" or "Deafness (HP:0000365)"
+_TRAILING_CURIE = re.compile(r"^(.*?)\s*[\[(]\s*([A-Za-z][A-Za-z0-9.\-]*):([^\s:_\])]+)\s*[\])]\s*$")
+
+# The ontologies whose ids count as one in brackets: those pedigree-ga4gh, and so
+# studio2ga4gh, can declare in a Phenopacket. Anything else in brackets, such as a
+# blood pressure "(BP:160/95)", is part of the condition's name.
+ONTOLOGY_PREFIXES = ("HP", "MONDO", "OMIM", "ORPHA", "DOID", "SNOMEDCT", "ICD10CM", "NCIT", "EFO", "GENO",
+                     "HGNC", "UBERON", "SO", "ECO", "PATO", "UO", "CL", "NCBITaxon", "UCUM", "LOINC", "CHEBI",
+                     "HANCESTRO", "MAXO", "DrugCentral")
+_PREFIX_NAMES = {p.lower(): p for p in ONTOLOGY_PREFIXES}
+_PREFIX_NAMES.update({"hpo": "HP", "mim": "OMIM", "orphanet": "ORPHA", "snomed": "SNOMEDCT", "sctid": "SNOMEDCT"})
+
+
+def split_condition_name(name: str) -> tuple[str, Optional[str]]:
+    """``"Breast cancer [MONDO:0007254]"`` -> ``("Breast cancer", "MONDO:0007254")``;
+    a name without an ontology id in brackets comes back with ``None``, and so
+    does one whose bracket holds something else (``"Hypertension (BP:160/95)"``)."""
+    m = _TRAILING_CURIE.match(name or "")
+    if m and m.group(2).lower() in _PREFIX_NAMES:
+        curie = "{}:{}".format(_PREFIX_NAMES[m.group(2).lower()], m.group(3))
+        return (m.group(1).strip() or curie), curie
+    return (name or "").strip(), None
+
+
 def _sanitise_column_name(name: str) -> str:
-    """Sanitise a phenotype name for use as a column header."""
-    s = re.sub(r"\s+", "_", name.strip())
+    """Sanitise a phenotype name for use as a column header (an ontology id in
+    brackets after the name is left out)."""
+    s = re.sub(r"\s+", "_", split_condition_name(name)[0])
     s = re.sub(r"[^\w\-]", "", s)
     return s or "Phenotype"
+
+
+def column_names(phenotypes: list[Phenotype]) -> list[str]:
+    """The MPED column for each phenotype; a name that would repeat gets _2, _3 ..."""
+    out: list[str] = []
+    for ph in phenotypes:
+        base = _sanitise_column_name(ph.name)
+        name, n = base, 1
+        while name.lower() in (o.lower() for o in out):
+            n += 1
+            name = f"{base}_{n}"
+        out.append(name)
+    return out
 
 
 # ── Public API ────────────────────────────────────────────────────────────
@@ -591,11 +827,15 @@ class ConversionResult:
     phenotypes: list[Phenotype]
     is_multi_phenotype: bool
     summary: str
+    notes: list = field(default_factory=list)  # symbols left out, identifiers changed and the like
+    ids: dict = field(default_factory=dict)    # Pedigree Studio's id -> the identifier in the files
 
 
 def convert(
     session_data: dict,
     output_prefix: str = "pedigree",
+    *,
+    ids: str = "numbers",
 ) -> ConversionResult:
     """Convert a Pedigree Studio session dict to PED/MPED file(s).
 
@@ -605,26 +845,63 @@ def convert(
         Parsed Pedigree Studio session JSON.
     output_prefix : str
         Base name for output files (without extension).
+    ids : str
+        How people are identified: ``"numbers"`` (pedigree numbers such as
+        II-3, the default), ``"drawing"``, ``"studio"`` or ``"text"``; see
+        :func:`individual_ids`.
 
     Returns
     -------
     ConversionResult
         Contains the generated file contents and metadata.
     """
-    persons, partnerships, child_links, legend_labels = parse_session(session_data)
+    everyone, partnerships, child_links, legend_labels = parse_session(session_data)
 
-    if not persons:
+    if not everyone:
         return ConversionResult(
             files=[], families=[], phenotypes=[],
             is_multi_phenotype=False, summary="No persons found in session.",
         )
+
+    numbering_mode = session_data.get("numberingMode") or "numbers"
+    id_map, notes = individual_ids(everyone, ids, numbering_mode)
+    for i, p in enumerate(q for row in drawn_rows(everyone) for q in row):
+        p.position = i
+
+    # The "no children" and "infertile" symbols are not people: leave them out
+    markers = {pid: p for pid, p in everyone.items() if p.is_marker}
+    persons = {pid: p for pid, p in everyone.items() if not p.is_marker}
+    pship_map = {pr.id: pr for pr in partnerships}
+    noted = set()
+    for cl in child_links:
+        pr = pship_map.get(cl.partnership_id)
+        if cl.child_id in markers and pr and pr.from_id in id_map and pr.to_id in id_map:
+            a, b = sorted((everyone[pr.from_id], everyone[pr.to_id]), key=lambda q: q.position)
+            notes.append(f"{id_map[a.id]} and {id_map[b.id]}: {MARKERS[markers[cl.child_id].shape]} "
+                         f"(the symbol is not a person, so it is left out)")
+            noted.add(cl.child_id)
+    for pid, m in markers.items():
+        if pid not in noted:
+            notes.append(f"a '{MARKERS[m.shape]}' symbol that is not joined to a couple is left out")
+    child_links = [cl for cl in child_links if cl.child_id not in markers]
+    for pid, p in persons.items():
+        if re.fullmatch(r"\d+|n", p.center_text or "", flags=re.I):
+            notes.append(f"{id_map[pid]} stands for {p.center_text} people in the drawing but is written as one person")
 
     # Detect families (connected components)
     families = detect_families(persons, partnerships, child_links)
 
     # Resolve parent-child relationships and generations for each family
     for fam in families:
-        resolve_parents(fam)
+        for item in resolve_parents(fam):
+            if item[0] == "adopted":
+                _, child, (a, b) = item
+                notes.append(f"{id_map[a]} and {id_map[b]} adopted {id_map[child]} (a dashed line): adoptive "
+                             f"parents are not genetic parents, so they are not written as {id_map[child]}'s parents")
+            else:
+                _, child, carrier, role = item
+                notes.append(f"{id_map[carrier]} carried {id_map[child]} as a surrogate (S): a gestational carrier is "
+                             f"not a genetic parent, so {id_map[child]}'s {role} is written as 0")
         assign_generations(fam)
 
     # Extract phenotypes from legend
@@ -635,6 +912,10 @@ def convert(
     # OR carrier notation is used alongside a phenotype
     carrier_present = any(has_carrier_notation(fam.persons) for fam in families)
     is_multi = len(phenotypes) > 1 or (len(phenotypes) == 1 and carrier_present)
+    if is_multi:
+        for ph, col in zip(phenotypes, column_names(phenotypes)):
+            if split_condition_name(ph.name)[1]:
+                notes.append(f"'{ph.name}' is the column {col} (a column name can't hold the ontology id)")
 
     # Build output files
     files: list[tuple[str, str]] = []
@@ -644,10 +925,10 @@ def convert(
 
         if is_multi:
             ext = ".mped"
-            content = build_mped(fam, phenotypes, carrier_present)
+            content = build_mped(fam, phenotypes, carrier_present, ids=id_map)
         else:
             ext = ".ped"
-            content = build_standard_ped(fam, phenotypes)
+            content = build_standard_ped(fam, phenotypes, ids=id_map)
 
         filename = f"{output_prefix}{suffix}{ext}"
         files.append((filename, content))
@@ -671,13 +952,26 @@ def convert(
         phenotypes=phenotypes,
         is_multi_phenotype=is_multi,
         summary=summary,
+        notes=notes,
+        ids=id_map,
     )
+
+
+def default_output_prefix(input_path: str) -> str:
+    """The input file's name without ``.studio.json``, or without its extension
+    (``okafor.studio.json`` -> ``okafor``, ``session.json`` -> ``session``)."""
+    base = os.path.basename(input_path)
+    if base.lower().endswith(".studio.json"):
+        return base[: -len(".studio.json")] or "pedigree"
+    return os.path.splitext(base)[0]
 
 
 def convert_file(
     input_path: str,
     output_prefix: Optional[str] = None,
     output_dir: Optional[str] = None,
+    *,
+    ids: str = "numbers",
 ) -> ConversionResult:
     """Read a Pedigree Studio session JSON and write PED/MPED files.
 
@@ -686,31 +980,36 @@ def convert_file(
     input_path : str
         Path to the input .json session file.
     output_prefix : str, optional
-        Base name for output files. Defaults to the input filename stem.
+        Base name for output files. Defaults to the input file's name without
+        ``.studio.json`` (or without its extension).
     output_dir : str, optional
-        Directory for output files. Defaults to the input file's directory.
+        Directory for output files, made if it does not exist yet. Defaults to
+        the input file's directory.
+    ids : str
+        How people are identified (see :func:`convert`).
 
     Returns
     -------
     ConversionResult
         Contains the written file paths and metadata.
     """
-    with open(input_path, "r") as f:
+    with open(input_path, "r", encoding="utf-8-sig") as f:
         session_data = json.load(f)
 
     if output_prefix is None:
-        output_prefix = os.path.splitext(os.path.basename(input_path))[0]
+        output_prefix = default_output_prefix(input_path)
 
     if output_dir is None:
         output_dir = os.path.dirname(input_path) or "."
 
-    result = convert(session_data, output_prefix)
+    result = convert(session_data, output_prefix, ids=ids)
 
     # Write files
+    os.makedirs(output_dir, exist_ok=True)
     written_files = []
     for filename, content in result.files:
         filepath = os.path.join(output_dir, filename)
-        with open(filepath, "w") as f:
+        with open(filepath, "w", encoding="utf-8") as f:
             f.write(content)
         written_files.append((filepath, content))
 

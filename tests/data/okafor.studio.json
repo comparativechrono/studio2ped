@@ -1,0 +1,589 @@
+{
+  "version": 4,
+  "personIdCounter": 0,
+  "labelIdCounter": 0,
+  "lineIdCounter": 17,
+  "persons": [
+    {
+      "id": "p-nnamdi",
+      "shape": "male",
+      "x": 512,
+      "y": 160,
+      "text": "Nnamdi\nd. 82",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-adanna",
+      "shape": "female",
+      "x": 616,
+      "y": 160,
+      "text": "Adanna\nd. 90",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ngozi",
+      "shape": "female",
+      "x": 356,
+      "y": 290,
+      "text": "Ngozi, 84",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-emeka",
+      "shape": "male",
+      "x": 460,
+      "y": 290,
+      "text": "Emeka, d. 70\nheart attack",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-grace",
+      "shape": "female",
+      "x": 668,
+      "y": 290,
+      "text": "Grace, 78\nbreast cancer dx 70",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#c0392b",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-samuel",
+      "shape": "male",
+      "x": 772,
+      "y": 290,
+      "text": "Samuel\nd. 79",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ifeanyi",
+      "shape": "male",
+      "x": 304,
+      "y": 420,
+      "text": "Ifeanyi, 49",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-obi",
+      "shape": "male",
+      "x": 460,
+      "y": 420,
+      "text": "Obi, 45",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-amaka",
+      "shape": "female",
+      "x": 590.0,
+      "y": 420,
+      "text": "Amaka, 42",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-chioma",
+      "shape": "female",
+      "x": 720,
+      "y": 420,
+      "text": "Chioma, d. 31\nroad accident",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-brothers",
+      "shape": "male",
+      "x": 850.0,
+      "y": 420,
+      "text": "all well",
+      "deceased": false,
+      "proband": false,
+      "centerText": "3",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ada",
+      "shape": "female",
+      "x": 382.0,
+      "y": 550,
+      "text": "Ada, 14",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-loss",
+      "shape": "miscarriage",
+      "x": 460,
+      "y": 550,
+      "text": "2016",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-chidi",
+      "shape": "male",
+      "x": 551.0,
+      "y": 550,
+      "text": "Chidi, 7",
+      "deceased": false,
+      "proband": true,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#2980b9",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-dubem",
+      "shape": "male",
+      "x": 642.0,
+      "y": 550,
+      "text": "Dubem, 7",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#2980b9",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-preg",
+      "shape": "unknown",
+      "x": 746.0,
+      "y": 550,
+      "text": "16 weeks",
+      "deceased": false,
+      "proband": false,
+      "centerText": "P",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    }
+  ],
+  "labels": [],
+  "partnerships": [
+    {
+      "id": "pship-1",
+      "fromId": "p-nnamdi",
+      "toId": "p-adanna",
+      "type": "normal"
+    },
+    {
+      "id": "pship-2",
+      "fromId": "p-ngozi",
+      "toId": "p-emeka",
+      "type": "normal"
+    },
+    {
+      "id": "pship-3",
+      "fromId": "p-grace",
+      "toId": "p-samuel",
+      "type": "normal"
+    },
+    {
+      "id": "pship-4",
+      "fromId": "p-obi",
+      "toId": "p-amaka",
+      "type": "consanguineous"
+    }
+  ],
+  "childLinks": [
+    {
+      "id": "child-5",
+      "partnershipId": "pship-1",
+      "childId": "p-emeka",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-6",
+      "partnershipId": "pship-1",
+      "childId": "p-grace",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-7",
+      "partnershipId": "pship-2",
+      "childId": "p-ifeanyi",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-8",
+      "partnershipId": "pship-2",
+      "childId": "p-obi",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-9",
+      "partnershipId": "pship-3",
+      "childId": "p-amaka",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-10",
+      "partnershipId": "pship-3",
+      "childId": "p-chioma",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-11",
+      "partnershipId": "pship-3",
+      "childId": "p-brothers",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-12",
+      "partnershipId": "pship-4",
+      "childId": "p-ada",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-13",
+      "partnershipId": "pship-4",
+      "childId": "p-loss",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-14",
+      "partnershipId": "pship-4",
+      "childId": "p-chidi",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-15",
+      "partnershipId": "pship-4",
+      "childId": "p-dubem",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-16",
+      "partnershipId": "pship-4",
+      "childId": "p-preg",
+      "branchYOffset": 0,
+      "dashed": false
+    }
+  ],
+  "twinLinks": [
+    {
+      "id": "twin-17",
+      "child1Id": "p-chidi",
+      "child2Id": "p-dubem",
+      "type": "identical",
+      "partnershipId": "pship-4"
+    }
+  ],
+  "legendLabels": {
+    "#2980b9": "Hearing loss from birth",
+    "#c0392b": "Breast cancer"
+  },
+  "legendVisible": true,
+  "legendX": 1006.0,
+  "legendY": 160,
+  "numberingMode": "numbers",
+  "partnerGapMultiplier": 2,
+  "childHeightMultiplier": 2.5,
+  "drawStrokes": []
+}

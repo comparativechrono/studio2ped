@@ -1,0 +1,712 @@
+{
+  "version": 4,
+  "personIdCounter": 0,
+  "labelIdCounter": 0,
+  "lineIdCounter": 19,
+  "persons": [
+    {
+      "id": "p-gf",
+      "shape": "male",
+      "x": 681.0,
+      "y": 160,
+      "text": "d. 50\nBowel cancer dx 48",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#e67e22",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-gm",
+      "shape": "female",
+      "x": 785.0,
+      "y": 160,
+      "text": "",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-mum",
+      "shape": "female",
+      "x": 408,
+      "y": 290,
+      "text": "",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-dad",
+      "shape": "male",
+      "x": 512,
+      "y": 290,
+      "text": "Bowel cancer\ndx ?47",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#e67e22",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-uncle",
+      "shape": "male",
+      "x": 954.0,
+      "y": 290,
+      "text": "70\nBowel cancer dx 64\nMLH1 variant +",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#e67e22",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-aunt",
+      "shape": "female",
+      "x": 1058.0,
+      "y": 290,
+      "text": "",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-brian",
+      "shape": "male",
+      "x": 252,
+      "y": 420,
+      "text": "Brian",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-gwen",
+      "shape": "female",
+      "x": 356,
+      "y": 420,
+      "text": "Gwen, d. 48\nPancreatic cancer\nMLH1 variant +",
+      "deceased": true,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#c0392b",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-alice",
+      "shape": "female",
+      "x": 486.0,
+      "y": 420,
+      "text": "Alice, 50\nBowel cancer dx 45\nMLH1 variant +",
+      "deceased": false,
+      "proband": true,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "solid",
+      "fillColor": "#e67e22",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ann",
+      "shape": "female",
+      "x": 694.0,
+      "y": 420,
+      "text": "Ann, 48\nDeclined testing",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-annp",
+      "shape": "male",
+      "x": 798.0,
+      "y": 420,
+      "text": "",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-gary",
+      "shape": "male",
+      "x": 954.0,
+      "y": 420,
+      "text": "Gary, 46",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-bob",
+      "shape": "male",
+      "x": 1084,
+      "y": 420,
+      "text": "Bob, 43\nDeclined testing",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-bobp",
+      "shape": "female",
+      "x": 1188,
+      "y": 420,
+      "text": "",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-gd1",
+      "shape": "female",
+      "x": 252,
+      "y": 550,
+      "text": "26",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-gd2",
+      "shape": "female",
+      "x": 356,
+      "y": 550,
+      "text": "24",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ad1",
+      "shape": "female",
+      "x": 694.0,
+      "y": 550,
+      "text": "26",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-ad2",
+      "shape": "female",
+      "x": 798.0,
+      "y": 550,
+      "text": "21",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-bd",
+      "shape": "female",
+      "x": 1084,
+      "y": 550,
+      "text": "20",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    },
+    {
+      "id": "p-bs",
+      "shape": "male",
+      "x": 1188,
+      "y": 550,
+      "text": "19",
+      "deceased": false,
+      "proband": false,
+      "centerText": "",
+      "miscarriageSex": "unknown",
+      "noSnap": false,
+      "siblingFixed": false,
+      "customLabel": "Lbl",
+      "fillMode": "none",
+      "fillColor": "#1a2332",
+      "quarters": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "halves": [
+        null,
+        null
+      ],
+      "shadingPattern": "stripes",
+      "shadingCoverage": "full"
+    }
+  ],
+  "labels": [],
+  "partnerships": [
+    {
+      "id": "pship-1",
+      "fromId": "p-gf",
+      "toId": "p-gm",
+      "type": "normal"
+    },
+    {
+      "id": "pship-2",
+      "fromId": "p-mum",
+      "toId": "p-dad",
+      "type": "normal"
+    },
+    {
+      "id": "pship-3",
+      "fromId": "p-uncle",
+      "toId": "p-aunt",
+      "type": "normal"
+    },
+    {
+      "id": "pship-4",
+      "fromId": "p-brian",
+      "toId": "p-gwen",
+      "type": "normal"
+    },
+    {
+      "id": "pship-5",
+      "fromId": "p-ann",
+      "toId": "p-annp",
+      "type": "normal"
+    },
+    {
+      "id": "pship-6",
+      "fromId": "p-bob",
+      "toId": "p-bobp",
+      "type": "normal"
+    }
+  ],
+  "childLinks": [
+    {
+      "id": "child-7",
+      "partnershipId": "pship-1",
+      "childId": "p-dad",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-8",
+      "partnershipId": "pship-1",
+      "childId": "p-uncle",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-9",
+      "partnershipId": "pship-2",
+      "childId": "p-gwen",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-10",
+      "partnershipId": "pship-2",
+      "childId": "p-alice",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-11",
+      "partnershipId": "pship-2",
+      "childId": "p-ann",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-12",
+      "partnershipId": "pship-3",
+      "childId": "p-gary",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-13",
+      "partnershipId": "pship-3",
+      "childId": "p-bob",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-14",
+      "partnershipId": "pship-4",
+      "childId": "p-gd1",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-15",
+      "partnershipId": "pship-4",
+      "childId": "p-gd2",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-16",
+      "partnershipId": "pship-5",
+      "childId": "p-ad1",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-17",
+      "partnershipId": "pship-5",
+      "childId": "p-ad2",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-18",
+      "partnershipId": "pship-6",
+      "childId": "p-bd",
+      "branchYOffset": 0,
+      "dashed": false
+    },
+    {
+      "id": "child-19",
+      "partnershipId": "pship-6",
+      "childId": "p-bs",
+      "branchYOffset": 0,
+      "dashed": false
+    }
+  ],
+  "twinLinks": [],
+  "legendLabels": {
+    "#e67e22": "Bowel cancer",
+    "#c0392b": "Pancreatic cancer"
+  },
+  "legendVisible": true,
+  "legendX": 1318.0,
+  "legendY": 160,
+  "numberingMode": "numbers",
+  "partnerGapMultiplier": 2,
+  "childHeightMultiplier": 2.5,
+  "drawStrokes": []
+}

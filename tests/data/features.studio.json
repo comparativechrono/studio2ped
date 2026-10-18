@@ -1,0 +1,1044 @@
+{
+ "version": 5,
+ "personIdCounter": 0,
+ "labelIdCounter": 0,
+ "lineIdCounter": 30,
+ "persons": [
+  {
+   "id": "gf",
+   "shape": "male",
+   "x": 1000,
+   "y": 160,
+   "text": "",
+   "deceased": true,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "line",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "gm",
+   "shape": "female",
+   "x": 1104,
+   "y": 160,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "dot",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c1",
+   "shape": "female",
+   "x": 100,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": true,
+   "fillMode": "solid",
+   "fillColor": "#c0392b",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p6",
+   "shape": "male",
+   "x": 204,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "half",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    "#c0392b",
+    "#2980b9"
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p5",
+   "shape": "female",
+   "x": 308,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "S",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p8",
+   "shape": "female",
+   "x": 412,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "shading",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p7",
+   "shape": "male",
+   "x": 516,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "D",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p9",
+   "shape": "male",
+   "x": 620,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p10",
+   "shape": "female",
+   "x": 724,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "solid",
+   "fillColor": "#27ae60",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p11",
+   "shape": "male",
+   "x": 828,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p12",
+   "shape": "female",
+   "x": 932,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p13",
+   "shape": "unknown",
+   "x": 1036,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p14",
+   "shape": "female",
+   "x": 1140,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p15",
+   "shape": "male",
+   "x": 1244,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p16",
+   "shape": "female",
+   "x": 1348,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p17",
+   "shape": "female",
+   "x": 1452,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "p18",
+   "shape": "male",
+   "x": 1556,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c2",
+   "shape": "male",
+   "x": 1660,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c3",
+   "shape": "male",
+   "x": 1764,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c4",
+   "shape": "male",
+   "x": 1868,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c9",
+   "shape": "unknown",
+   "x": 1972,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "P",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c11",
+   "shape": "miscarriage",
+   "x": 2076,
+   "y": 290,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "female",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c5",
+   "shape": "male",
+   "x": 300,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c6",
+   "shape": "female",
+   "x": 520,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c7",
+   "shape": "adopted-female",
+   "x": 720,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c8",
+   "shape": "female",
+   "x": 1150,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "c10",
+   "shape": "male",
+   "x": 1254,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "3",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "m1",
+   "shape": "no-offspring",
+   "x": 1500,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  },
+  {
+   "id": "m2",
+   "shape": "infertile",
+   "x": 1720,
+   "y": 420,
+   "text": "",
+   "deceased": false,
+   "proband": false,
+   "fillMode": "none",
+   "fillColor": "#1a2332",
+   "quarters": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "halves": [
+    null,
+    null
+   ],
+   "shadingPattern": "stripes",
+   "shadingCoverage": "full",
+   "centerText": "",
+   "miscarriageSex": "unknown",
+   "noSnap": false,
+   "siblingFixed": false,
+   "customLabel": "Lbl"
+  }
+ ],
+ "labels": [],
+ "partnerships": [
+  {
+   "id": "pship-1",
+   "fromId": "gf",
+   "toId": "gm",
+   "type": "normal"
+  },
+  {
+   "id": "pship-4",
+   "fromId": "p6",
+   "toId": "p5",
+   "type": "normal"
+  },
+  {
+   "id": "pship-6",
+   "fromId": "p7",
+   "toId": "p8",
+   "type": "normal"
+  },
+  {
+   "id": "pship-8",
+   "fromId": "p9",
+   "toId": "p10",
+   "type": "separated"
+  },
+  {
+   "id": "pship-10",
+   "fromId": "p11",
+   "toId": "p12",
+   "type": "consanguineous-separated"
+  },
+  {
+   "id": "pship-12",
+   "fromId": "p13",
+   "toId": "p14",
+   "type": "normal"
+  },
+  {
+   "id": "pship-14",
+   "fromId": "p15",
+   "toId": "p16",
+   "type": "normal"
+  },
+  {
+   "id": "pship-16",
+   "fromId": "p18",
+   "toId": "p17",
+   "type": "normal"
+  }
+ ],
+ "childLinks": [
+  {
+   "id": "child-2",
+   "partnershipId": "pship-1",
+   "childId": "c1",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-3",
+   "partnershipId": "pship-1",
+   "childId": "p6",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-5",
+   "partnershipId": "pship-1",
+   "childId": "p8",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-7",
+   "partnershipId": "pship-1",
+   "childId": "p9",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-9",
+   "partnershipId": "pship-1",
+   "childId": "p11",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-11",
+   "partnershipId": "pship-1",
+   "childId": "p13",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-13",
+   "partnershipId": "pship-1",
+   "childId": "p15",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-15",
+   "partnershipId": "pship-1",
+   "childId": "p17",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-17",
+   "partnershipId": "pship-1",
+   "childId": "c2",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-18",
+   "partnershipId": "pship-1",
+   "childId": "c3",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-19",
+   "partnershipId": "pship-1",
+   "childId": "c4",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-22",
+   "partnershipId": "pship-1",
+   "childId": "c9",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-23",
+   "partnershipId": "pship-1",
+   "childId": "c11",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-24",
+   "partnershipId": "pship-4",
+   "childId": "c5",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-25",
+   "partnershipId": "pship-6",
+   "childId": "c6",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-26",
+   "partnershipId": "pship-8",
+   "childId": "c7",
+   "branchYOffset": 0,
+   "dashed": true
+  },
+  {
+   "id": "child-27",
+   "partnershipId": "pship-12",
+   "childId": "c8",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-28",
+   "partnershipId": "pship-12",
+   "childId": "c10",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-29",
+   "partnershipId": "pship-14",
+   "childId": "m1",
+   "branchYOffset": 0,
+   "dashed": false
+  },
+  {
+   "id": "child-30",
+   "partnershipId": "pship-16",
+   "childId": "m2",
+   "branchYOffset": 0,
+   "dashed": false
+  }
+ ],
+ "twinLinks": [
+  {
+   "id": "twin-20",
+   "child1Id": "c2",
+   "child2Id": "c3",
+   "type": "identical",
+   "partnershipId": "pship-1"
+  },
+  {
+   "id": "twin-21",
+   "child1Id": "c3",
+   "child2Id": "c4",
+   "type": "nonidentical",
+   "partnershipId": "pship-1"
+  }
+ ],
+ "legendLabels": {
+  "#c0392b": "Condition X [MONDO:0009061]",
+  "#2980b9": "Condition Y",
+  "shading:stripes:full": "Condition Z"
+ },
+ "legendVisible": true,
+ "legendX": 50,
+ "legendY": 60,
+ "zoom": 1,
+ "panX": 0,
+ "panY": 0,
+ "numberingMode": "numbers",
+ "partnerGapMultiplier": 2,
+ "childHeightMultiplier": 2.5,
+ "drawStrokes": []
+}
