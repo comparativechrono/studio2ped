@@ -180,12 +180,26 @@ def test_adoptive_and_surrogate_parents_are_not_genetic_parents():
     assert table["III-1"][2:4] == ["II-2", "0"]        # II-3, the mother in the drawing, is a surrogate
     assert table["III-3"][2:4] == ["0", "0"]           # adopted by II-6 and II-7
     assert table["III-2"][2:4] == ["II-5", "II-4"]     # a donor (D) is a genetic parent
-    assert any("II-3 carried III-1 as a surrogate" in n for n in features.notes)
+    assert any("II-3 carried III-1 as a gestational carrier (S)" in n for n in features.notes)
     assert any("II-6 and II-7 adopted III-3" in n for n in features.notes)
     ids = [r[1] for r in rows(features.files[0][1])]
     assert ids.index("III-3") > ids.index("II-7")       # still listed with their generation
     price = studio2ped.convert(load("price"))
     assert {r[1]: r for r in rows(price.files[0][1])}["III-5"][2:4] == ["0", "0"]
+
+
+def test_a_parent_marked_g_is_a_gestational_carrier():
+    """Since the 2025 correction to the nomenclature, Pedigree Studio marks a gestational carrier G: read as S was."""
+    session = load("features")
+    marked = [p for p in session["persons"] if p.get("centerText") == "S"]
+    assert len(marked) == 1
+    marked[0]["centerText"] = "G"
+    features = studio2ped.convert(session)
+    table = {r[1]: r for r in rows(features.files[0][1])}
+    assert table["III-1"][2:4] == ["II-2", "0"]        # II-3, the mother in the drawing, is the gestational carrier
+    assert any("II-3 carried III-1 as a gestational carrier (G)" in n for n in features.notes)
+    assert not any("surrogate" in n for n in features.notes)
+    assert studio2ped.convert(load("features")).files == features.files   # G and S give the same file
 
 
 def test_labels_become_identifiers_as_in_studio2ga4gh():

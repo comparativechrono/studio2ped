@@ -37,6 +37,12 @@ SHAPE_TO_SEX = {
 # couple, so they have to be taken out before the family is written.
 MARKERS = {"no-offspring": "no children", "infertile": "infertility"}
 
+# The marks inside a symbol that make someone a gestational carrier, who carried a
+# child but is not their genetic parent: G since the 2025 correction to the pedigree
+# nomenclature, and S, which drawings from before it use (a woman who gives the egg
+# and carries the pregnancy is a donor, D, and so a genetic parent)
+GESTATIONAL_CARRIER = ("G", "S")
+
 # The kinds of identifier --ids offers (see individual_ids)
 ID_CHOICES = ("numbers", "drawing", "studio", "text")
 
@@ -58,7 +64,7 @@ class Person:
     quarters: list                   # [TR, BR, BL, TL] colours or None
     shading_pattern: str             # 'stripes'|'dots'
     shading_coverage: str            # 'full'|'half-left'|'half-right'
-    center_text: str                 # 'S'|'P'|'D'|'dot'|''
+    center_text: str                 # 'G'|'S'|'P'|'D'|'dot'|'line'|''
     deceased: bool
     custom_label: str
     father_id: Optional[str] = None  # the genetic parents, resolved during graph analysis
@@ -259,11 +265,13 @@ def resolve_parents(family: Family) -> list:
     ``drawn_father_id`` and ``drawn_mother_id`` are the couple the drawing
     joins a person to. ``father_id`` and ``mother_id`` are their genetic
     parents, which the PED file gives: a dashed line (an adoption) gives no
-    genetic parents, and a parent marked S, a gestational carrier (surrogate),
-    is not a genetic parent, as in studio2ga4gh's PED-style pedigree.
+    genetic parents, and a parent marked G, a gestational carrier, is not a
+    genetic parent, as in studio2ga4gh's PED-style pedigree. Drawings from
+    before the 2025 correction to the pedigree nomenclature mark a gestational
+    carrier S, which is read the same way.
 
     Returns what was not written as a parent, as ``("adopted", child, (a, b))``
-    and ``("surrogate", child, carrier, "mother" or "father")``.
+    and ``("gestational carrier", child, carrier, "mother" or "father")``.
     """
     pship_map = {p.id: p for p in family.partnerships}
     left_out = []
@@ -297,8 +305,8 @@ def resolve_parents(family: Family) -> list:
             left_out.append(("adopted", child.id, (p1.id, p2.id)))
             continue
         for parent, role in ((father, "father"), (mother, "mother")):
-            if parent.center_text == "S":
-                left_out.append(("surrogate", child.id, parent.id, role))
+            if parent.center_text in GESTATIONAL_CARRIER:
+                left_out.append(("gestational carrier", child.id, parent.id, role))
             elif role == "father":
                 child.father_id = parent.id
             else:
@@ -900,8 +908,9 @@ def convert(
                              f"parents are not genetic parents, so they are not written as {id_map[child]}'s parents")
             else:
                 _, child, carrier, role = item
-                notes.append(f"{id_map[carrier]} carried {id_map[child]} as a surrogate (S): a gestational carrier is "
-                             f"not a genetic parent, so {id_map[child]}'s {role} is written as 0")
+                mark = fam.persons[carrier].center_text
+                notes.append(f"{id_map[carrier]} carried {id_map[child]} as a gestational carrier ({mark}), and a "
+                             f"gestational carrier is not a genetic parent, so {id_map[child]}'s {role} is written as 0")
         assign_generations(fam)
 
     # Extract phenotypes from legend
