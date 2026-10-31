@@ -202,6 +202,22 @@ def test_a_parent_marked_g_is_a_gestational_carrier():
     assert studio2ped.convert(load("features")).files == features.files   # G and S give the same file
 
 
+def test_a_symbol_in_thirds_has_each_condition():
+    """Pedigree Studio can divide a symbol into thirds, one part for each of up to three conditions (Bennett et al.
+    2022): each colour in it is a condition the person has, as with quarters."""
+    session = {"persons": [person("p1", "male", 0, 0), person("p2", "female", 104, 0),
+                           person("p3", "male", 52, 130, fillMode="thirds", thirds=["#c0392b", "#2980b9", None]),
+                           person("p4", "female", 156, 130, fillMode="quartered", quarters=["#c0392b", None, None, None])],
+               "partnerships": [{"id": "ps1", "fromId": "p1", "toId": "p2"}],
+               "childLinks": [{"id": "c1", "partnershipId": "ps1", "childId": "p3"},
+                              {"id": "c2", "partnershipId": "ps1", "childId": "p4"}],
+               "legendLabels": {"#c0392b": "Condition A", "#2980b9": "Condition B"}}
+    table = {r[1]: r for r in rows(studio2ped.convert(session).files[0][1])}
+    assert table["II-1"][5:] == ["2", "2"]
+    assert table["II-2"][5:] == ["2", "1"]
+    assert table["I-1"][5:] == ["1", "1"]
+
+
 def test_labels_become_identifiers_as_in_studio2ga4gh():
     """Spaces become underscores and other punctuation is dropped, the same rule studio2ga4gh uses, so a person
     has the same identifier in the PED file and the GA4GH files."""
