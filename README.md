@@ -81,7 +81,7 @@ The converter reads a Pedigree Studio session file and:
    pedigree nomenclature mark a gestational carrier S, which is read the same
    way. studio2ga4gh's PED-style pedigree gives the same.
 5. **Extracts phenotypes** from the colour key: solid fills, half fills,
-   quartered fills and shading patterns are all recognised.
+   symbols in thirds or quarters, and shading patterns are all recognised.
 6. **Detects carrier notation**: centre dots (●) and half-filled symbols mark
    carriers.
 7. **Chooses the format**:
@@ -177,7 +177,7 @@ colour key:
 | Full shading (stripes/dots) | `shading:pattern:full` | Affected (2) |
 | Half colour fill (one side only) | `#rrggbb` | Carrier (3) |
 | Half shading | `shading:pattern:half-left` | Carrier (3) |
-| Quartered fill (any quarter) | `#rrggbb` | Affected (2) |
+| Thirds or quarters (any part) | `#rrggbb` | Affected (2) |
 | Centre dot (●) | — | Carrier (3) |
 | No fill | — | Unaffected (1) |
 

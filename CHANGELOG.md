@@ -10,6 +10,9 @@
 - The note says "gestational carrier" and gives the mark (G or S), not
   "surrogate": the corrected nomenclature keeps "surrogate" for a woman who
   gives the egg and carries the pregnancy, who is a genetic parent.
+- A symbol divided into thirds, which Pedigree Studio now draws for three
+  conditions, gives each of its colours as a condition the person has, as
+  quarters do.
 
 ## 0.2.0
 

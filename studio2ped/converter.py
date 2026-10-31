@@ -58,10 +58,11 @@ class Person:
     shape: str
     sex: int
     text: str                        # annotation text (may contain name, dob, etc.)
-    fill_mode: str                   # 'none'|'solid'|'half'|'quartered'|'shading'
+    fill_mode: str                   # 'none'|'solid'|'half'|'thirds'|'quartered'|'shading'
     fill_color: Optional[str]        # hex colour for solid fill
     halves: list                     # [left_colour|None, right_colour|None]
     quarters: list                   # [TR, BR, BL, TL] colours or None
+    thirds: list                     # [top right, bottom, top left] colours or None
     shading_pattern: str             # 'stripes'|'dots'
     shading_coverage: str            # 'full'|'half-left'|'half-right'
     center_text: str                 # 'G'|'S'|'P'|'D'|'dot'|'line'|''
@@ -148,6 +149,7 @@ def parse_session(data: dict) -> tuple[dict[str, Person], list[Partnership], lis
             fill_color=pd.get("fillColor"),
             halves=pd.get("halves", [None, None]),
             quarters=pd.get("quarters", [None, None, None, None]),
+            thirds=pd.get("thirds") or [None, None, None],
             shading_pattern=pd.get("shadingPattern", "stripes"),
             shading_coverage=pd.get("shadingCoverage", "full"),
             center_text=pd.get("centerText", ""),
@@ -434,7 +436,7 @@ def classify_person_phenotypes(
     - Full shading matching a shading phenotype → affected (2)
     - Half fill with one half matching a colour phenotype → carrier (3)
     - Half shading matching a shading phenotype with half coverage → carrier (3)
-    - Quartered fill with any quarter matching a colour phenotype → affected (2)
+    - Thirds or quarters with any part matching a colour phenotype → affected (2)
     - Centre dot ('dot') → add carrier status for all phenotypes that person has
     - No matching fill → unaffected (1)
     """
@@ -459,11 +461,12 @@ def classify_person_phenotypes(
                 else:
                     is_half_colour[c] = False
 
-    elif person.fill_mode == "quartered":
-        for c in (person.quarters or []):
+    elif person.fill_mode in ("quartered", "thirds"):
+        # a symbol in thirds or quarters: one part for each condition, each affected
+        for c in ((person.quarters if person.fill_mode == "quartered" else person.thirds) or []):
             if c:
                 person_colours.add(c)
-                is_half_colour[c] = False  # quartered = affected
+                is_half_colour[c] = False
 
     # Match colour phenotypes
     for ph in phenotypes:
