@@ -66,16 +66,19 @@ def test_people_are_given_their_pedigree_numbers():
 
 
 def test_numbers_follow_pedigree_studio():
-    """A new generation starts 80 px or more below the first symbol of the one above; each generation is
-    numbered from the left, counting the "no children" and "infertile" symbols, as Pedigree Studio does."""
+    """A new generation starts 80 px or more below the first person of the one above; each generation is
+    numbered from the left. The "no children" and "infertile" symbols are not people: as in Pedigree Studio,
+    they have no number and do not count in their row."""
     session = {"persons": [
         person("a", x=300, y=100), person("b", "female", x=100, y=150),     # 50 px lower: still generation I
         person("c", x=200, y=179),                                         # 79 px below a: still I
         person("d", "female", x=50, y=180),                                # 80 px below a: generation II
         person("m", "no-offspring", x=10, y=200), person("e", x=400, y=210),
+        person("n", "infertile", x=20, y=300),                             # a row with only a bar is no generation
+        person("f", x=30, y=390),
     ], "partnerships": [], "childLinks": []}
     numbers = studio2ped.pedigree_numbers(studio2ped.parse_session(session)[0])
-    assert numbers == {"b": "I-1", "c": "I-2", "a": "I-3", "m": "II-1", "d": "II-2", "e": "II-3"}
+    assert numbers == {"b": "I-1", "c": "I-2", "a": "I-3", "d": "II-1", "e": "II-2", "f": "III-1"}
     deep = {"persons": [person("p{}".format(i), y=i * 100) for i in range(14)], "partnerships": [], "childLinks": []}
     numbers = studio2ped.pedigree_numbers(studio2ped.parse_session(deep)[0])
     assert numbers["p11"] == "XII-1" and numbers["p12"] == "13-1"
@@ -104,6 +107,26 @@ def test_ids_text_gives_version_0_1_0s_identifiers():
     # the two people labelled 26 can't both be 26, so each is given their pedigree number, with a note
     assert "26" not in ids and {"IV-1", "IV-3"} <= ids
     assert any("'26'" in n and "IV-1 and IV-3" in n for n in result.notes)
+
+
+def test_the_bars_have_no_label_in_any_numbering():
+    """Letters, and labels typed in, skip the "no children" and "infertile" symbols as numbers do."""
+    session = {"persons": [
+        person("f", x=100, y=0), person("m", "female", x=200, y=0),
+        person("bar", "no-offspring", x=0, y=150, customLabel="from an older drawing"),
+        person("c1", x=100, y=150, customLabel="Kid"), person("c2", "female", x=200, y=150),
+    ], "partnerships": [{"id": "pr", "fromId": "f", "toId": "m"}],
+        "childLinks": [{"id": "l1", "partnershipId": "pr", "childId": "c1"},
+                       {"id": "l2", "partnershipId": "pr", "childId": "c2"}]}
+    ids = {mode: studio2ped.convert(dict(session, numberingMode=mode), ids="drawing").ids
+           for mode in ("numbers", "letters", "lettersonly", "freetext")}
+    assert ids["numbers"] == {"f": "I-1", "m": "I-2", "c1": "II-1", "c2": "II-2"}
+    assert ids["letters"] == {"f": "I-A", "m": "I-B", "c1": "II-A", "c2": "II-B"}
+    assert ids["lettersonly"] == {"f": "A", "m": "B", "c1": "C", "c2": "D"}
+    assert ids["freetext"] == {"f": "I-1", "m": "I-2", "c1": "Kid", "c2": "II-2"}
+    from studio2ped.converter import drawing_labels
+    everyone = studio2ped.parse_session(dict(session, numberingMode="freetext"))[0]
+    assert "bar" not in drawing_labels(everyone, "freetext") and "bar" not in drawing_labels(everyone, "letters")
 
 
 def test_ids_studio_and_drawing():

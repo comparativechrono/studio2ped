@@ -114,9 +114,10 @@ would be `0`, the person is given their pedigree number instead, and a note
 says so.
 
 Pedigree numbers follow the drawing, as in Pedigree Studio: a new generation
-starts 80 pixels or more below the first symbol of the generation above, and
-the "no children" and "infertility" symbols are counted in their row, even
-though they are not written to the file.
+starts 80 pixels or more below the first person of the generation above, and
+each generation is numbered from the left. Only people are numbered: the "no
+children" and "infertility" symbols are not people, so they have no number
+and do not count in their row.
 
 ## Output formats
 

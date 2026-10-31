@@ -13,6 +13,13 @@
 - A symbol divided into thirds, which Pedigree Studio now draws for three
   conditions, gives each of its colours as a condition the person has, as
   quarters do.
+- The "no children" and "infertility" symbols no longer count when a row is
+  numbered. The nomenclature numbers individuals (Bennett et al., *J Genet
+  Couns* 2022;31(6):1238-48) and these symbols are not people, so Pedigree
+  Studio now gives them no number, and studio2ped numbers only people too:
+  someone to the right of one of these symbols in the same row has a number
+  one lower than before (II-3 rather than II-4), and a row with nothing but
+  these symbols is not a generation.
 
 ## 0.2.0
 
