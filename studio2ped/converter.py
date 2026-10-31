@@ -531,12 +531,13 @@ def has_carrier_notation(persons: dict[str, Person]) -> bool:
 def drawn_rows(persons: dict[str, Person]) -> list[list[Person]]:
     """The rows (generations) of the drawing as Pedigree Studio numbers them.
 
-    Everyone is sorted from top to bottom, the "no children" and "infertile"
-    symbols included; a new row starts 80 px or more below the first symbol of
-    the row above, and each row is read from left to right.
+    The people are sorted from top to bottom; a new row starts 80 px or more
+    below the first person of the row above, and each row is read from left to
+    right. The "no children" and "infertile" symbols are not people, so they
+    are left out and do not count in their row.
     """
     rows: list[list[Person]] = []
-    for p in sorted(persons.values(), key=lambda q: q.y):
+    for p in sorted((q for q in persons.values() if not q.is_marker), key=lambda q: q.y):
         if rows and p.y - rows[-1][0].y < 80:
             rows[-1].append(p)
         else:
@@ -550,7 +551,8 @@ def _generation_label(index: int) -> str:
 
 def pedigree_numbers(persons: dict[str, Person]) -> dict[str, str]:
     """Pedigree numbers as Pedigree Studio shows them: the generation in Roman
-    numerals and the position from the left, such as ``II-3``."""
+    numerals and the position from the left, such as ``II-3``. Only people are
+    numbered: the "no children" and "infertile" symbols have no number."""
     out = {}
     for gi, row in enumerate(drawn_rows(persons)):
         for pi, p in enumerate(row):
@@ -567,14 +569,17 @@ def _letters(n: int) -> str:
 
 
 def drawing_labels(persons: dict[str, Person], numbering_mode: str = "numbers") -> dict[str, str]:
-    """The label each symbol shows in the drawing under its numbering setting:
+    """The label each person shows in the drawing under its numbering setting:
     pedigree numbers (``numbers``, and ``off``), letters (``letters``: II-A;
     ``lettersonly``: A, B, C ...) or the labels typed in (``freetext``, where a
-    symbol without one shows its pedigree number)."""
+    person without one shows their pedigree number). The "no children" and
+    "infertile" symbols have no label."""
     numbers = pedigree_numbers(persons)
     if numbering_mode == "freetext":
         out = {}
         for pid, p in persons.items():
+            if p.is_marker:
+                continue
             label = (p.custom_label or "").strip()
             out[pid] = label if label and label != "Lbl" else numbers[pid]
         return out
@@ -609,8 +614,9 @@ def individual_ids(
     * ``text``: version 0.1.0's identifiers (see :func:`make_individual_id`),
       which are often names.
 
-    ``persons`` should include the "no children" and "infertile" symbols,
-    because Pedigree Studio counts them when it numbers a row. Identifiers must
+    ``persons`` may include the "no children" and "infertile" symbols: they
+    are not people, so they are given no identifier and, as in Pedigree
+    Studio, do not count when a row is numbered. Identifiers must
     be unique, so anyone whose identifier would be shared with someone else, or
     would be empty or ``0`` (which PED reads as "no parent"), is given their
     pedigree number instead, and a note says so.
