@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.1
+
+- A parent marked G is a gestational carrier, and is not written as a genetic
+  parent. Since the 2025 correction to the pedigree nomenclature (Steinhaus
+  French, Bennett and Resta, *J Genet Couns* 2025;34(2):e2020), G marks a
+  gestational carrier, and Pedigree Studio draws G where it used to draw S.
+  S, which older drawings use, still means the same.
+- The note says "gestational carrier" and gives the mark (G or S), not
+  "surrogate": the corrected nomenclature keeps "surrogate" for a woman who
+  gives the egg and carries the pregnancy, who is a genetic parent.
+
 ## 0.2.0
 
 - People are now identified by their pedigree numbers (I-1, II-3 and so on),

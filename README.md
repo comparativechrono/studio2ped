@@ -76,9 +76,10 @@ The converter reads a Pedigree Studio session file and:
 4. **Gives genetic parents only.** The father and mother columns of a PED
    file are genetic parents. A child joined to a couple by a dashed line (an
    adoption) gets 0 for that couple, and so does the place of a parent marked
-   S (a gestational carrier), with a note in each case; a parent marked D (a
-   donor) is a genetic parent. studio2ga4gh's PED-style pedigree gives the
-   same.
+   G (a gestational carrier), with a note in each case; a parent marked D (a
+   donor) is a genetic parent. Drawings made before the 2025 correction to the
+   pedigree nomenclature mark a gestational carrier S, which is read the same
+   way. studio2ga4gh's PED-style pedigree gives the same.
 5. **Extracts phenotypes** from the colour key: solid fills, half fills,
    quartered fills and shading patterns are all recognised.
 6. **Detects carrier notation**: centre dots (●) and half-filled symbols mark
